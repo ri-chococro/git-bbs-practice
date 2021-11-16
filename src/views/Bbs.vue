@@ -19,6 +19,7 @@
           <div>コメント内容：</div>
           <pre class="bg-pink-100 p-5 rounded-sm">{{ comment.content }}</pre>
         </div>
+        <CompCommentForm v-bind:article-id="article.id"></CompCommentForm>
       </div>
     </div>
   </div>
@@ -26,8 +27,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import CompCommentForm from "@/components/CompCommentForm.vue";
 
-@Component
+@Component({
+  components: {
+    CompCommentForm,
+  },
+})
 export default class Bbs extends Vue {
   // 最新の投稿記事一覧
   private currentArticleList = [];
