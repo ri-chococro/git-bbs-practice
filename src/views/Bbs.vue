@@ -10,9 +10,15 @@
 
     <div class="bbs">
       <div v-for="article of currentArticleList" v-bind:key="article.id">
+        <hr />
         <div>投稿者名：{{ article.name }}</div>
         <div>投稿内容：</div>
         <pre><div>{{ article.content }}</div></pre>
+        <div v-for="comment of article.commentList" :key="comment.id">
+          <div>コメント者名：{{ comment.name }}</div>
+          <div>コメント内容：</div>
+          <pre class="bg-pink-100 p-5 rounded-sm">{{ comment.content }}</pre>
+        </div>
       </div>
     </div>
   </div>
