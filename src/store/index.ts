@@ -18,7 +18,22 @@ export default new Vuex.Store({
       ]),
     ],
   },
-  mutations: {},
+  mutations: {
+    /**
+     * 記事を追加する.
+     *
+     * @remarks 受け取ったpayload内のarticleをstateのarticlesの0番目に追加
+     * @param state - Vuexのstateオブジェクト
+     * @param payload - 新しい記事
+     */
+    addArticle(state, payload) {
+      state.articles.unshift(
+        new Article(payload.id, payload.name, payload.content, payload.comments)
+      );
+      console.log(state.articles);
+
+    },
+  },
   actions: {},
   getters: {
     getArticles(state) {
