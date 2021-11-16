@@ -9,11 +9,17 @@
     <button v-on:click="addArticle">記事投稿</button>
 
     <div class="bbs">
-      <div v-for="article of currentArticleList" v-bind:key="article.id">
+      <div
+        v-for="(article, index) of currentArticleList"
+        v-bind:key="article.id"
+      >
         <hr />
         <div>投稿者名：{{ article.name }}</div>
         <div>投稿内容：</div>
         <pre><div>{{ article.content }}</div></pre>
+        <button v-on:click="deleteArticle(index)">記事削除</button>
+        <br />
+        <br />
         <div v-for="comment of article.commentList" :key="comment.id">
           <div>コメント者名：{{ comment.name }}</div>
           <div>コメント内容：</div>
@@ -60,6 +66,14 @@ export default class Bbs extends Vue {
     });
     this.articleName = "";
     this.articleContent = "";
+  }
+  /**
+   * 記事を削除する.
+   *
+   * @param payload - 削除したい記事のインデックス
+   */
+  deleteArticle(payload: number): void {
+    this.$store.commit("deleteArticle", payload);
   }
 }
 </script>
