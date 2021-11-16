@@ -1,7 +1,14 @@
 <template>
   <div>
+    <div v-if="articleNameError" class="error">※名前を入力してください</div>
+    <div v-if="articleNameLengthError" class="error">
+      ※名前は50文字以内で入力してください
+    </div>
     <label for="articleName">投稿者名：</label><br />
     <input type="text" id="articleName" v-model="articleName" /><br />
+    <div v-if="articleContentError" class="error">
+      ※投稿内容を入力してください
+    </div>
     <label for="articleContent">投稿内容：</label>
     <br />
     <textarea id="articleContent" v-model="articleContent" rows="8" />
@@ -47,6 +54,12 @@ export default class Bbs extends Vue {
   private articleName = "";
   // 投稿内容
   private articleContent = "";
+  // 投稿者名が入っていないエラー
+  private articleNameError = false;
+  // 投稿者名の文字数エラー
+  private articleNameLengthError = false;
+  // 投稿内容が入っていないエラー
+  private articleContentError = false;
 
   /**
    * Vuexストア内の投稿記事の情報を取得しcurrentArticleListに格納する.
@@ -58,6 +71,29 @@ export default class Bbs extends Vue {
    * 記事を追加する.
    */
   addArticle(): void {
+    // 投稿入力のバリデーション
+    if (this.articleName) {
+      this.articleNameError = false;
+    } else {
+      this.articleNameError = true;
+    }
+    if (this.articleContent) {
+      this.articleContentError = false;
+    } else {
+      this.articleContentError = true;
+    }
+    if (this.articleName.length <= 50) {
+      this.articleNameLengthError = false;
+    } else {
+      this.articleNameLengthError = true;
+    }
+    if (
+      this.articleNameError ||
+      this.articleContentError ||
+      this.articleNameLengthError
+    ) {
+      return;
+    }
     let newId: number;
     if (this.$store.getters.getArticles.length === 0) {
       newId = 1;
@@ -84,4 +120,8 @@ export default class Bbs extends Vue {
 }
 </script>
 
-<style></style>
+<style scoped>
+.error {
+  color: red;
+}
+</style>
