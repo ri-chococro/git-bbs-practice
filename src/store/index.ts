@@ -1,7 +1,7 @@
-import { Article } from '@/types/article';
-import { Comment } from '@/types/comment';
 import Vue from "vue";
 import Vuex from "vuex";
+import { Article } from "@/types/article";
+import { Comment } from "@/types/comment";
 
 Vue.use(Vuex);
 
@@ -36,7 +36,9 @@ export default new Vuex.Store({
   },
   actions: {},
   getters: {
-
+    getArticles(state) {
+      return state.articles;
+    },
   },
   modules: {},
 });

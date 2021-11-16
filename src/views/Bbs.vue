@@ -7,6 +7,14 @@
     <textarea id="articleContent" v-model="articleContent" rows="8" />
     <br />
     <button v-on:click="addArticle">記事投稿</button>
+
+    <div class="bbs">
+      <div v-for="article of currentArticleList" v-bind:key="article.id">
+        <div>投稿者名：{{ article.name }}</div>
+        <div>投稿内容：</div>
+        <pre><div>{{ article.content }}</div></pre>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -15,11 +23,19 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class Bbs extends Vue {
+  // 最新の投稿記事一覧
+  private currentArticleList = [];
   // 投稿者名
   private articleName = "";
   // 投稿内容
   private articleContent = "";
 
+  /**
+   * Vuexストア内の投稿記事の情報を取得しcurrentArticleListに格納する.
+   */
+  created() {
+    this.currentArticleList = this["$store"].getters.getArticles;
+  }
   /**
    * 記事を追加する.
    */
