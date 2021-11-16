@@ -32,6 +32,19 @@ export default new Vuex.Store({
       );
     },
     /**
+     * 新規コメントをstateに格納する.
+     *
+     * @param state - stateを利用するための引数
+     * @param payload - フォームにて入力されたコメント内容
+     */
+    addComment(state, payload) {
+      for (const article of state.articles) {
+        if (article.id == payload.comment.articleId) {
+          article.commentList.unshift(payload.comment);
+        }
+      }
+    },
+    /**
      * 記事を削除する.
      *
      * @param state - Vuexのstateオブジェクト
@@ -43,6 +56,12 @@ export default new Vuex.Store({
   },
   actions: {},
   getters: {
+    /**
+     * 投稿記事の情報を返す.
+     *
+     * @param state - stateを利用するための引数
+     * @returns 投稿記事の情報
+     */
     getArticles(state) {
       return state.articles;
     },
