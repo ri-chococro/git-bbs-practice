@@ -30,9 +30,7 @@ export default new Vuex.Store({
       state.articles.unshift(
         new Article(payload.id, payload.name, payload.content, payload.comments)
       );
-      console.log(state.articles);
     },
-
     /**
      * 新規コメントをstateに格納する.
      *
@@ -45,6 +43,15 @@ export default new Vuex.Store({
           article.commentList.unshift(payload.comment);
         }
       }
+    },
+    /**
+     * 記事を削除する.
+     *
+     * @param state - Vuexのstateオブジェクト
+     * @param payload - 削除する記事のID
+     */
+    deleteArticle(state, payload) {
+      state.articles.splice(payload, 1);
     },
   },
   actions: {},
